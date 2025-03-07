@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "cli"
+version = "0.1.0"
+description = ""
+authors = ["Mustafa Yasin <myasin@adobe.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.8"
+rag= { path = "../rag" }
+database = { path = "../database" }
+
+[tool.poetry.scripts]
+sourcehub = "cli.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+extend = "../pyproject.toml"
+

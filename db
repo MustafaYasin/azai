@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Get the directory of the script, to ensure we can find the module even if
+# the script is run from a different directory
+# https://stackoverflow.com/a/4774063
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+DOTENV_PATH="$SCRIPT_PATH/.env"
+
+if [ "$1" = "export" ]; then
+  if [ -z "$2" ]; then
+    echo "Error: No file path provided."
+    exit 1
+  fi
+
+  . "$DOTENV_PATH"
+
+  PGPASSWORD="${POSTGRES_PASSWORD}" pg_dump -U "${POSTGRES_USERNAME}" -h "${POSTGRES_HOST}" -p 5432 -F c -b -v -f "$2"
+
+  echo "Done."
+elif [ "$1" = "restore" ]; then
+  if [ -z "$2" ]; then
+    echo "Error: No file path provided."
+    exit 1
+  fi
+
+  . "$DOTENV_PATH"
+
+  PGPASSWORD="${POSTGRES_PASSWORD}" dropdb -U "$POSTGRES_USERNAME" -h "$POSTGRES_HOST" -p 5432 "$POSTGRES_DATABASE" --force --if-exists
+  PGPASSWORD="${POSTGRES_PASSWORD}" createdb -U "$POSTGRES_USERNAME" -h "$POSTGRES_HOST" -p 5432 "$POSTGRES_DATABASE"
+  PGPASSWORD="${POSTGRES_PASSWORD}" pg_restore -U "$POSTGRES_USERNAME" -h "$POSTGRES_HOST" -p 5432 -d "$POSTGRES_DATABASE" -v "$2"
+
+  echo "Done."
+fi

@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "database"
+version = "0.1.0"
+description = ""
+authors = ["Mustafa Yasin <myasin@adobe.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.8"
+pydantic-settings = "^2.7.0"
+alembic = "^1.14.0"
+pydantic = "^2.10.4"
+sqlalchemy = "^2.0.36"
+python-dotenv = "^1.0.1"
+psycopg2 = "^2.9.10"
+sqlmodel = "^0.0.22"
+pgvector = "^0.3.6"
+pre-commit = "^4.1.0"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+extend = "../pyproject.toml"
