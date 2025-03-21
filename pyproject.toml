@@ -3,4 +3,56 @@ name = "kai"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "tiktoken>=0.9.0",
+]
+
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ERA001", # Remove commented-out code
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D104", # Missing docstring in public package
+    "D107", # Missing docstring in `__init__`
+    "B008", # Do not perform function call `Depends` in argument defaults; ...
+    "TD002", # Missing author in T O D O; try: `# T O D O(<author_name>): ...` or `# T O D O @<author_name>: ...`
+    "TD003", # Missing issue link on the line following this T O D O
+    "FIX002", # Line contains T O D O, consider resolving the issue
+    "SIM102", # Use a single `if` statement instead of nested `if` statements
+    "ANN204", # Missing return type annotation for special method `__init__`
+    "D203", # one-blank-line-before-class; Checks for docstrings on class definitions that are not preceded by a blank line.
+    "D212", # multi-line-summary-first-line; Checks for docstring summary lines that are not positioned on the first physical line of the docstring.
+
+    # Compatibility with ruff format
+    "W191", # tab-indentation
+    "E111", # indentation-with-invalid-multiple
+    "E114", # indentation-with-invalid-multiple-comment
+    "E117", # over-indented
+    "D206", # indent-with-space
+    "D300", # triple-single-quotes
+    "Q000", # bad-quotes-inline-string
+    "Q001", # bad-quotes-multiline-string
+    "Q002", # bad-quotes-docstring
+    "Q003", # avoidable-escaped-quote
+    "COM812", # missing-trailing-comma
+    "COM819", # prhoibit-trailing-comma
+    "ISC001", # singline-line-implicit-string-concatenation
+    "ISC002" # multi-line-implicit-string-concatenation
+]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
