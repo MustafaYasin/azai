@@ -55,7 +55,7 @@ Temporary Items
 /.vscode
 
 ### PyCharm ###
-.idea/
+.idea/*
 
 
 ### PyCharm+all ###

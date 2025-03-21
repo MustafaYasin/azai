@@ -1,0 +1,58 @@
+repos:
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      #- id: check-json
+      #  exclude: ^(.*/tsconfig(\.[^.]+)?\.json)
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude_types:
+          - plain-text
+          - svg
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+        exclude_types:
+          - plain-text
+      - id: check-ast  # for python files
+      - id: check-builtin-literals  # requires literal syntax when initializing empty or zero python builtin types
+      - id: check-docstring-first  # checks a common error of defining a docstring after code
+      - id: debug-statements  # checks for debugger imports and py37+ `breakpoint()` calls in python source
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.17
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-gfm==0.3.6
+          - mdformat-black==0.1.1
+          - mdformat-shfmt==0.1.0
+        args: [ "--number" ]
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.5
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
