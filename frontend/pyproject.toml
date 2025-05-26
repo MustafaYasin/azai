@@ -1,27 +1,31 @@
-[tool.poetry]
+[project]
 name = "frontend"
 version = "0.1.0"
 description = ""
-authors = ["Mustafa Yasin <myasin@adobe.com>"]
+authors = [{ name = "Mustafa Yasin", email = "myasin@adobe.com" }]
+requires-python = ">=3.12"
 readme = "README.md"
+dependencies = [
+    "openai>=1.12.0,<2",
+    "langchain>=0.3.18,<0.4",
+    "langchain-community>=0.3.17,<0.4",
+    "docx2txt>=0.8,<0.9",
+    "pypdf>=5.3.0,<6",
+    "unstructured[pdf]>=0.16.20,<0.17",
+    "database",
+    "rag",
+    "streamlit>=1.42.2,<2",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12.8"
-openai = "^1.12.0"
-langchain = "^0.3.18"
-langchain-community = "^0.3.17"
-docx2txt = "^0.8"
-pypdf = "^5.3.0"
-unstructured = {extras = ["pdf"], version = "^0.16.20"}
-database = { path = "../database" }
-rag= { path = "../rag" }
-streamlit = "^1.42.2"
+[tool.uv]
 
+[tool.uv.sources]
+database = { workspace = true }
+rag = { workspace = true }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 extend = "../pyproject.toml"

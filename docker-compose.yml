@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: sourcehub
+      POSTGRES_PASSWORD: sourcehub
+      POSTGRES_DB: sourcehub
+
+volumes:
+  postgres-data:

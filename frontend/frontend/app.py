@@ -1,4 +1,5 @@
-
+import torch
+torch.classes.__path__ = []
 import streamlit as st
 from rag.generation import Generator
 from rag.retrieval import Retriever
