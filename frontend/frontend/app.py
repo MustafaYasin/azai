@@ -1,17 +1,16 @@
-import torch
-
-torch.classes.__path__ = []
-
 import streamlit as st
+import torch
 from rag.generation import Generator
 from rag.retrieval import Retriever
 
 from frontend.auth import authenticate
 from frontend.settings import settings
 
+torch.classes.__path__ = []
+
+
 
 def main():
-    """Main application entry point."""
     st.set_page_config(
         page_title="PureChat",
         page_icon="🌐",
