@@ -1,9 +1,10 @@
 from collections.abc import Sequence
 
-from database import open_session
-from database.models import Chunk
 from openai import OpenAI
 from sqlmodel import select
+
+from database import open_session
+from database.models import Chunk
 
 
 class Retriever:

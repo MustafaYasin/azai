@@ -1,10 +1,10 @@
 import uuid
 from typing import Any
 
-from database import open_session
-from database.models import Chunk
 from docling.chunking import HybridChunker
 
+from database import open_session
+from database.models import Chunk
 from rag.tokenizer import OpenAITokenizerWrapper
 
 

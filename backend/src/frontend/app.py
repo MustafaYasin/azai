@@ -1,10 +1,10 @@
 import streamlit as st
 import torch
-from rag.generation import Generator
-from rag.retrieval import Retriever
 
 from frontend.auth import authenticate
 from frontend.settings import settings
+from rag.generation import Generator
+from rag.retrieval import Retriever
 
 torch.classes.__path__ = []
 
