@@ -13,14 +13,6 @@ resolution-markers = [
     "(python_full_version < '3.12.4' and platform_machine != 'aarch64' and sys_platform == 'linux') or (python_full_version < '3.12.4' and sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 
-[manifest]
-members = [
-    "backend",
-    "database",
-    "frontend",
-    "rag",
-]
-
 [[package]]
 name = "accelerate"
 version = "1.7.0"
@@ -191,7 +183,52 @@ wheels = [
 [[package]]
 name = "backend"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
+dependencies = [
+    { name = "alembic" },
+    { name = "docling" },
+    { name = "docx2txt" },
+    { name = "langchain" },
+    { name = "langchain-community", version = "0.3.21", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "langchain-community", version = "0.3.25", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "openai" },
+    { name = "pgvector" },
+    { name = "pre-commit" },
+    { name = "psycopg2" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "pypdf" },
+    { name = "python-dotenv" },
+    { name = "sqlalchemy" },
+    { name = "sqlmodel" },
+    { name = "streamlit" },
+    { name = "tiktoken" },
+    { name = "transformers" },
+    { name = "unstructured", extra = ["pdf"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "alembic", specifier = ">=1.14.0,<2.0.0" },
+    { name = "docling", specifier = ">=2.25.0,<3" },
+    { name = "docx2txt", specifier = ">=0.8,<0.9" },
+    { name = "langchain", specifier = ">=0.3.18,<0.4" },
+    { name = "langchain-community", specifier = ">=0.3.17,<0.4" },
+    { name = "openai", specifier = ">=1.65.2,<2" },
+    { name = "pgvector", specifier = ">=0.3.6,<1.0.0" },
+    { name = "pre-commit", specifier = ">=4.1.0,<5.0.0" },
+    { name = "psycopg2", specifier = ">=2.9.10,<3.0.0" },
+    { name = "pydantic", specifier = ">=2.10.4,<3.0.0" },
+    { name = "pydantic-settings", specifier = ">=2.7.0,<3.0.0" },
+    { name = "pypdf", specifier = ">=5.3.0,<6" },
+    { name = "python-dotenv", specifier = ">=1.0.1,<2.0.0" },
+    { name = "sqlalchemy", specifier = ">=2.0.36,<3.0.0" },
+    { name = "sqlmodel", specifier = ">=0.0.22,<1.0.0" },
+    { name = "streamlit", specifier = ">=1.42.2,<2" },
+    { name = "tiktoken", specifier = ">=0.9.0,<0.10" },
+    { name = "transformers", specifier = ">=4.42.0,<4.43.0" },
+    { name = "unstructured", extras = ["pdf"], specifier = ">=0.16.20,<0.17" },
+]
 
 [[package]]
 name = "backoff"
@@ -447,35 +484,6 @@ wheels = [
 ]
 
 [[package]]
-name = "database"
-version = "0.1.0"
-source = { editable = "src/database" }
-dependencies = [
-    { name = "alembic" },
-    { name = "pgvector" },
-    { name = "pre-commit" },
-    { name = "psycopg2" },
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "python-dotenv" },
-    { name = "sqlalchemy" },
-    { name = "sqlmodel" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "alembic", specifier = ">=1.14.0,<2.0.0" },
-    { name = "pgvector", specifier = ">=0.3.6,<1.0.0" },
-    { name = "pre-commit", specifier = ">=4.1.0,<5.0.0" },
-    { name = "psycopg2", specifier = ">=2.9.10,<3.0.0" },
-    { name = "pydantic", specifier = ">=2.10.4,<3.0.0" },
-    { name = "pydantic-settings", specifier = ">=2.7.0,<3.0.0" },
-    { name = "python-dotenv", specifier = ">=1.0.1,<2.0.0" },
-    { name = "sqlalchemy", specifier = ">=2.0.36,<3.0.0" },
-    { name = "sqlmodel", specifier = ">=0.0.22,<1.0.0" },
-]
-
-[[package]]
 name = "dataclasses-json"
 version = "0.6.7"
 source = { registry = "https://pypi.org/simple" }
@@ -565,7 +573,7 @@ wheels = [
 
 [[package]]
 name = "docling-core"
-version = "2.34.1"
+version = "2.34.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonref" },
@@ -579,9 +587,9 @@ dependencies = [
     { name = "typer" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/56/e6017eb07d1d895fe411fe1723e8a28c9fef36e4ef18bb81a83492969f34/docling_core-2.34.1.tar.gz", hash = "sha256:c9cdf6413693a5bdfce7d276644d16a337938ce07ace643c460e2d9da1787c01", size = 142697, upload-time = "2025-06-08T18:12:25.566Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2a/4c/5657997c78900d7cb3b9fe7d336ec89c195fe5d630610b7c49c07fee3809/docling_core-2.34.2.tar.gz", hash = "sha256:418555e4025036311fb2de46cbcaf70169827c6bd79856cff1930e4833cdae6d", size = 142774, upload-time = "2025-06-10T15:19:56.129Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f8/4d/e360e87a4cc54056cbb6838051254bd13b01a44a195d9d93a170f5e0cac3/docling_core-2.34.1-py3-none-any.whl", hash = "sha256:c7f2c31d84791a0d8f7b2996abceef0c0debbff30725de899fb62401278ccb9f", size = 146743, upload-time = "2025-06-08T18:12:22.715Z" },
+    { url = "https://files.pythonhosted.org/packages/34/de/f35ea288aa9cab2b85ecd99d4415453a5bd27b28a02a941f58925008fa17/docling_core-2.34.2-py3-none-any.whl", hash = "sha256:ed33345aab4af6dccace27344e24a47c10bc164145192ba625c19c1031ceb9f3", size = 146787, upload-time = "2025-06-10T15:19:54.128Z" },
 ]
 
 [package.optional-dependencies]
@@ -750,36 +758,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/68/97/190b8f9ba22f8b7d07df2faa9fd7087b453776d0705d3cb5b0cbd89b8ef0/fonttools-4.58.2-cp313-cp313-win32.whl", hash = "sha256:994e362b01460aa863ef0cb41a29880bc1a498c546952df465deff7abf75587a", size = 2175688, upload-time = "2025-06-06T14:50:36.211Z" },
     { url = "https://files.pythonhosted.org/packages/94/ea/0e6d4a39528dbb6e0f908c2ad219975be0a506ed440fddf5453b90f76981/fonttools-4.58.2-cp313-cp313-win_amd64.whl", hash = "sha256:f95dec862d7c395f2d4efe0535d9bdaf1e3811e51b86432fa2a77e73f8195756", size = 2226464, upload-time = "2025-06-06T14:50:38.862Z" },
     { url = "https://files.pythonhosted.org/packages/e8/e5/c1cb8ebabb80be76d4d28995da9416816653f8f572920ab5e3d2e3ac8285/fonttools-4.58.2-py3-none-any.whl", hash = "sha256:84f4b0bcfa046254a65ee7117094b4907e22dc98097a220ef108030eb3c15596", size = 1114597, upload-time = "2025-06-06T14:50:56.619Z" },
-]
-
-[[package]]
-name = "frontend"
-version = "0.1.0"
-source = { editable = "src/frontend" }
-dependencies = [
-    { name = "database" },
-    { name = "docx2txt" },
-    { name = "langchain" },
-    { name = "langchain-community", version = "0.3.21", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
-    { name = "langchain-community", version = "0.3.24", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
-    { name = "openai" },
-    { name = "pypdf" },
-    { name = "rag" },
-    { name = "streamlit" },
-    { name = "unstructured", extra = ["pdf"] },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "database", editable = "src/database" },
-    { name = "docx2txt", specifier = ">=0.8,<0.9" },
-    { name = "langchain", specifier = ">=0.3.18,<0.4" },
-    { name = "langchain-community", specifier = ">=0.3.17,<0.4" },
-    { name = "openai", specifier = ">=1.12.0,<2" },
-    { name = "pypdf", specifier = ">=5.3.0,<6" },
-    { name = "rag", editable = "src/rag" },
-    { name = "streamlit", specifier = ">=1.42.2,<2" },
-    { name = "unstructured", extras = ["pdf"], specifier = ">=0.16.20,<0.17" },
 ]
 
 [[package]]
@@ -1089,7 +1067,7 @@ wheels = [
 
 [[package]]
 name = "huggingface-hub"
-version = "0.32.4"
+version = "0.32.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
@@ -1101,9 +1079,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/60/c8/4f7d270285c46324fd66f62159eb16739aa5696f422dba57678a8c6b78e9/huggingface_hub-0.32.4.tar.gz", hash = "sha256:f61d45cd338736f59fb0e97550b74c24ee771bcc92c05ae0766b9116abe720be", size = 424494, upload-time = "2025-06-03T09:59:46.105Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/fb/7fcbafabdf470ffb5457b756cc1f659b4e88a9ff37c108e6c7a5ab5e781e/huggingface_hub-0.32.6.tar.gz", hash = "sha256:8e960f23dc57519c6c2a0bbc7e9bc030eaa14e7f2d61f8e68fd3d025dabed2fa", size = 424961, upload-time = "2025-06-11T08:17:53.171Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/8b/222140f3cfb6f17b0dd8c4b9a0b36bd4ebefe9fb0098ba35d6960abcda0f/huggingface_hub-0.32.4-py3-none-any.whl", hash = "sha256:37abf8826b38d971f60d3625229221c36e53fe58060286db9baf619cfbf39767", size = 512101, upload-time = "2025-06-03T09:59:44.099Z" },
+    { url = "https://files.pythonhosted.org/packages/c5/42/dd58e603c5b069c4e4759c7c44e4f5ccdc2ce02185848232775f5d6d5d50/huggingface_hub-0.32.6-py3-none-any.whl", hash = "sha256:32cde9558c965477556edca72352621def7fbc42e167aaf33f4cdb9af65bb28b", size = 512800, upload-time = "2025-06-11T08:17:50.977Z" },
 ]
 
 [[package]]
@@ -1386,7 +1364,7 @@ wheels = [
 
 [[package]]
 name = "langchain-community"
-version = "0.3.24"
+version = "0.3.25"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.12.4' and python_full_version < '3.13' and sys_platform == 'darwin'",
@@ -1410,14 +1388,14 @@ dependencies = [
     { name = "sqlalchemy", marker = "python_full_version < '3.13'" },
     { name = "tenacity", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/f6/4892d1f1cf6d3e89da6ee6cfb0eb82b908c706c58bde7df28367ee76a93f/langchain_community-0.3.24.tar.gz", hash = "sha256:62d9e8cf9aadf35182ec3925f9ec1c8e5e84fb4f199f67a01aee496d289dc264", size = 33233643, upload-time = "2025-05-12T13:26:39.222Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/9b/332e69933ce7d96153fe5468d5428052ae20b143fa0dba0c78eea8859f94/langchain_community-0.3.25.tar.gz", hash = "sha256:a536888a48b36184dee20df86d266827a01916397fb398af2088ab7c3dfee684", size = 33235586, upload-time = "2025-06-10T20:19:08.809Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/cb/582f22d74d69f4dbd41e98d361ee36922b79a245a9411383327bd4b63747/langchain_community-0.3.24-py3-none-any.whl", hash = "sha256:b6cdb376bf1c2f4d2503aca20f8f35f2d5b3d879c52848277f20ce1950e7afaf", size = 2528335, upload-time = "2025-05-12T13:26:37.375Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/e1/975bcd11e86de74c10023d291879810d4eaffcfbb5d4c0d8fb6fb41b8247/langchain_community-0.3.25-py3-none-any.whl", hash = "sha256:0d7f673d463019ab1aca4e50e750048214a7772efd2c8e1d59256739b8318f97", size = 2529170, upload-time = "2025-06-10T20:19:06.775Z" },
 ]
 
 [[package]]
 name = "langchain-core"
-version = "0.3.64"
+version = "0.3.65"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonpatch" },
@@ -1428,9 +1406,9 @@ dependencies = [
     { name = "tenacity" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/40/89a80157f495d4adc9e5e770171806e3231600647f4ca0e89bdf743702ff/langchain_core-0.3.64.tar.gz", hash = "sha256:71b51bf77003eb57e74b8fa2a84ac380e24aa7357f173b51645c5834b9fc0d62", size = 558483, upload-time = "2025-06-05T21:27:10.817Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/04/8a/d08c83195d1ef26c42728412ab92ab08211893906b283abce65775e21327/langchain_core-0.3.65.tar.gz", hash = "sha256:54b5e0c8d9bb405415c3211da508ef9cfe0acbe5b490d1b4a15664408ee82d9b", size = 558557, upload-time = "2025-06-10T20:08:28.94Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c3/43/94b486eeb778443887e4eb76326e704ee0c6244f5fab6a46686e09968e9a/langchain_core-0.3.64-py3-none-any.whl", hash = "sha256:e844c425329d450cb3010001d86b61fd59a6a17691641109bae39322c85e27dd", size = 438113, upload-time = "2025-06-05T21:27:07.981Z" },
+    { url = "https://files.pythonhosted.org/packages/54/f0/31db18b7b8213266aed926ce89b5bdd84ccde7ee2edf4cab14e3dd2bfcf1/langchain_core-0.3.65-py3-none-any.whl", hash = "sha256:80e8faf6e9f331f8ef728f3fe793549f1d3fb244fcf9e1bdcecab6a6f4669394", size = 438052, upload-time = "2025-06-10T20:08:27.393Z" },
 ]
 
 [[package]]
@@ -1908,7 +1886,7 @@ name = "nvidia-cudnn-cu12"
 version = "9.5.1.17"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2a/78/4535c9c7f859a64781e43c969a3a7e84c54634e319a996d43ef32ce46f83/nvidia_cudnn_cu12-9.5.1.17-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:30ac3869f6db17d170e0e556dd6cc5eee02647abc31ca856634d5a40f82c15b2", size = 570988386, upload-time = "2024-10-25T19:54:26.39Z" },
@@ -1919,7 +1897,7 @@ name = "nvidia-cufft-cu12"
 version = "11.3.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8f/16/73727675941ab8e6ffd86ca3a4b7b47065edcca7a997920b831f8147c99d/nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:ccba62eb9cef5559abd5e0d54ceed2d9934030f51163df018532142a8ec533e5", size = 200221632, upload-time = "2024-11-20T17:41:32.357Z" },
@@ -1948,9 +1926,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.7.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
-    { name = "nvidia-cusparse-cu12" },
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "nvidia-cusparse-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f0/6e/c2cf12c9ff8b872e92b4a5740701e51ff17689c4d726fca91875b07f655d/nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:e9e49843a7707e42022babb9bcfa33c29857a93b88020c4e4434656a655b698c", size = 158229790, upload-time = "2024-11-20T17:43:43.211Z" },
@@ -1962,7 +1940,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.5.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/06/1e/b8b7c2f4099a37b96af5c9bb158632ea9e5d9d27d7391d7eb8fc45236674/nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:7556d9eca156e18184b94947ade0fba5bb47d69cec46bf8660fd2c71a4b48b73", size = 216561367, upload-time = "2024-11-20T17:44:54.824Z" },
@@ -2078,7 +2056,7 @@ wheels = [
 
 [[package]]
 name = "openai"
-version = "1.85.0"
+version = "1.86.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -2090,9 +2068,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/22/3c/1143dc0a865d06482454fddb35d739c9260b18d721f01287f79cc53a315f/openai-1.85.0.tar.gz", hash = "sha256:6ba76e4ebc5725f71f2f6126c7cb5169ca8de60dd5aa61f350f9448ad162c913", size = 468207, upload-time = "2025-06-09T16:51:17.361Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/7a/9ad4a61f1502f0e59d8c27fb629e28a63259a44d8d31cd2314e1534a2d9f/openai-1.86.0.tar.gz", hash = "sha256:c64d5b788359a8fdf69bd605ae804ce41c1ce2e78b8dd93e2542e0ee267f1e4b", size = 468272, upload-time = "2025-06-10T16:50:32.962Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/73/b4427c7873f4f778ec7a6d2b1724fd3aadc85719a12e324615b9c2bc614f/openai-1.85.0-py3-none-any.whl", hash = "sha256:7dc3e839cb8bb8747979a90c63ad4cb25a8e0cbec17b53eec009532c9965cecf", size = 730229, upload-time = "2025-06-09T16:51:15.678Z" },
+    { url = "https://files.pythonhosted.org/packages/58/c1/dfb16b3432810fc9758564f9d1a4dbce6b93b7fb763ba57530c7fc48316d/openai-1.86.0-py3-none-any.whl", hash = "sha256:c8889c39410621fe955c230cc4c21bfe36ec887f4e60a957de05f507d7e1f349", size = 730296, upload-time = "2025-06-10T16:50:30.495Z" },
 ]
 
 [[package]]
@@ -2927,27 +2905,6 @@ wheels = [
 ]
 
 [[package]]
-name = "rag"
-version = "0.1.0"
-source = { editable = "src/rag" }
-dependencies = [
-    { name = "database" },
-    { name = "docling" },
-    { name = "openai" },
-    { name = "tiktoken" },
-    { name = "transformers" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "database", editable = "src/database" },
-    { name = "docling", specifier = ">=2.25.0,<3" },
-    { name = "openai", specifier = ">=1.65.2,<2" },
-    { name = "tiktoken", specifier = ">=0.9.0,<0.10" },
-    { name = "transformers", specifier = ">=4.42.0,<4.43.0" },
-]
-
-[[package]]
 name = "rapidfuzz"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -3661,7 +3618,7 @@ name = "triton"
 version = "3.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "setuptools" },
+    { name = "setuptools", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/24/5f/950fb373bf9c01ad4eb5a8cd5eaf32cdf9e238c02f9293557a2129b9c4ac/triton-3.3.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9999e83aba21e1a78c1f36f21bce621b77bcaa530277a50484a7cb4a822f6e43", size = 155669138, upload-time = "2025-05-29T23:39:51.771Z" },

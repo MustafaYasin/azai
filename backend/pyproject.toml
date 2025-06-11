@@ -31,10 +31,7 @@ dependencies = [
     "streamlit>=1.42.2,<2",
 ]
 
-[tool.uv.workspace]
-members = ["src/database", "src/rag", "src/frontend"]
-
-# Ruff configuration from root
+# Ruff configuration
 [tool.ruff.format]
 skip-magic-trailing-comma = true
 
@@ -53,14 +50,9 @@ ignore = [
     "D107", # undocumented-public-init
     "ANN204", # missing-return-type-special-method
     "INP001", # implicit-namespace-package
-    "D203", # one-blank-line-before-class; incompatible with no-blank-line-before-class (D211)
-    "D212", # multi-line-summary-first-line; incompatible with multi-line-summary-second-line (D213)
-
-    # Compatibility with DI of FastAPI
+    "D203", # one-blank-line-before-class
+    "D212", # multi-line-summary-first-line
     "B008", # function-call-in-default-argument
-
-    # Compatibility with ruff format
-    # https://docs.astral.sh/ruff/formatter/\#conflicting-lint-rules
     "W191", # tab-indentation
     "E111", # indentation-with-invalid-multiple
     "E114", # indentation-with-invalid-multiple-comment
