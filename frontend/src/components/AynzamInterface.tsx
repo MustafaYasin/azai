@@ -183,35 +183,12 @@ export default function AynzamInterface() {
         );
       }
 
-      // Regular text
-      return part;
+      // Regular text - preserve emojis and special characters
+      return <span key={index}>{part}</span>;
     });
   };
 
-  // Enhanced detection for "no information" messages in German
-  const isNoInfoMessage = (content: string) => {
-    const noInfoIndicators = [
-      'es wurden keine relevanten informationen in den dokumenten gefunden',
-      'leider enthalten die bereitgestellten dokumentenauszüge keine informationen',
-      'die bereitgestellten dokumentenauszüge enthalten keine spezifischen informationen',
-      'keine passenden dokumente gefunden',
-      'keine relevanten dokumentenauszüge verfügbar'
-    ];
 
-    const lowerContent = content.toLowerCase().trim();
-    
-    // Only trigger if the content is short and matches exactly
-    if (lowerContent.length < 100) {
-      return noInfoIndicators.some(indicator => lowerContent.includes(indicator));
-    }
-    
-    // For longer content, be more specific
-    return noInfoIndicators.some(indicator => 
-      lowerContent.startsWith(indicator) || 
-      lowerContent.includes(indicator + '.') ||
-      lowerContent.includes(indicator + ' zu')
-    );
-  };
 
   const sendMessage = async (useOpenAI = false, contentOverride?: string) => {
     const messageToSend = contentOverride || message;
@@ -314,13 +291,12 @@ export default function AynzamInterface() {
 
       setIsStreaming(false);
 
-      // Check if we should show OpenAI fallback
-      if (!useOpenAI && isNoInfoMessage(accumulatedContent)) {
-        setShowOpenAIFallback(true);
-      }
+      // Check if we should show OpenAI fallback - will be determined after sources are loaded
+      console.log('After streaming completed. useOpenAI:', useOpenAI, 'accumulatedContent:', accumulatedContent.substring(0, 100) + '...');
 
       // After streaming is complete, get sources (only for RAG responses)
       if (!useOpenAI) {
+        console.log('Making sources request...');
         try {
           const sourcesResponse = await fetch(`${API_BASE_URL}/api/search`, {
             method: 'POST',
@@ -334,6 +310,7 @@ export default function AynzamInterface() {
           });
 
           if (sourcesResponse.ok) {
+            console.log('Sources response OK, processing...');
             const sourcesData = await sourcesResponse.json();
             const sources = sourcesData.results.map((result: any) => ({
               title: result.title,
@@ -353,9 +330,27 @@ export default function AynzamInterface() {
               }
               return updated;
             });
+
+            // Smart fallback detection: 
+            // 1. No sources found, OR
+            // 2. Sources found but response indicates no relevant info
+            const responseIndicatesNoInfo = accumulatedContent.toLowerCase().includes('keine spezifischen informationen') ||
+                                          accumulatedContent.toLowerCase().includes('keine relevanten informationen') ||
+                                          accumulatedContent.toLowerCase().includes('enthalten die bereitgestellten dokumentenauszüge keine');
+            
+            console.log('Debug fallback:', { 
+              sourcesLength: sources.length, 
+              responseIndicatesNoInfo, 
+              accumulatedContent: accumulatedContent.substring(0, 100) + '...'
+            });
+            
+            if (sources.length === 0 || responseIndicatesNoInfo) {
+              console.log('Setting showOpenAIFallback to true');
+              setShowOpenAIFallback(true);
+            }
           }
         } catch (sourcesErr) {
-          console.warn('Fehler beim Laden der Quellen:', sourcesErr);
+          console.error('Fehler beim Laden der Quellen:', sourcesErr);
         }
       }
 
@@ -706,6 +701,10 @@ export default function AynzamInterface() {
                         </div>
 
                         {/* Enhanced OpenAI Fallback in German */}
+                        {(() => {
+                          console.log('Button debug:', { showOpenAIFallback, isLastMessage: i === messages.length - 1, isNotOpenAI: !msg.isOpenAI, messageIndex: i, totalMessages: messages.length });
+                          return null;
+                        })()}
                         {showOpenAIFallback && i === messages.length - 1 && !msg.isOpenAI && (
                           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-5 shadow-sm">
                             <div className="flex items-start space-x-4">

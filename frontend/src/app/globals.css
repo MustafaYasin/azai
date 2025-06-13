@@ -55,6 +55,11 @@ a {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Ensure emojis render properly */
+* {
+  font-family: inherit, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
 /* Custom scrollbar styling for a more polished look */
 ::-webkit-scrollbar {
   width: 8px;

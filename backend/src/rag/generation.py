@@ -29,7 +29,6 @@ class Generator:
 Ihre Aufgaben:
 - Analysieren Sie die bereitgestellten Dokumentenauszüge gründlich
 - Beantworten Sie die Frage basierend auf den tatsächlichen Inhalten der Auszüge
-- Zitieren Sie die relevanten Quellen mit Seitenzahlen
 - Fassen Sie komplexe technische Informationen klar und verständlich zusammen
 - Wenn die Auszüge die relevanten Informationen enthalten, geben Sie diese ausführlich wieder
 - Antworten Sie immer auf Deutsch und im Kontext technischer Dokumentation
@@ -37,6 +36,7 @@ Ihre Aufgaben:
 - Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
 - Nutzen Sie Aufzählungszeichen (-) für Listen
 - Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten
+- Vermeiden Sie Quellenangaben im Text (Quellen werden separat angezeigt)
 
 Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
@@ -56,9 +56,8 @@ Verfügbare Dokumentenauszüge:
 
 Anforderungen an die Antwort:
 1. Nutzen Sie die Informationen aus den Dokumentenauszügen
-2. Zitieren Sie die relevanten Stellen mit Quellenangabe und Seitenzahl
-3. Formulieren Sie die Antwort klar und verständlich
-4. Falls die Information tatsächlich nicht in den Auszügen zu finden ist, erklären Sie, welche verwandten Informationen verfügbar sind"""
+2. Formulieren Sie die Antwort klar und verständlich ohne Quellenangaben im Text
+3. Falls die Information tatsächlich nicht in den Auszügen zu finden ist, erklären Sie, welche verwandten Informationen verfügbar sind"""
                 }
             ]
 
@@ -95,7 +94,6 @@ Anforderungen an die Antwort:
 Ihre Aufgaben:
 - Analysieren Sie die bereitgestellten Dokumentenauszüge gründlich
 - Beantworten Sie die Frage basierend auf den tatsächlichen Inhalten der Auszüge
-- Zitieren Sie die relevanten Quellen mit Seitenzahlen
 - Fassen Sie komplexe technische Informationen klar und verständlich zusammen
 - Wenn die Auszüge die relevanten Informationen enthalten, geben Sie diese ausführlich wieder
 - Antworten Sie immer auf Deutsch und im Kontext technischer Dokumentation
@@ -103,6 +101,7 @@ Ihre Aufgaben:
 - Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
 - Nutzen Sie Aufzählungszeichen (-) für Listen
 - Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten
+- Vermeiden Sie Quellenangaben im Text (Quellen werden separat angezeigt)
 
 Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
@@ -122,9 +121,8 @@ Verfügbare Dokumentenauszüge:
 
 Anforderungen an die Antwort:
 1. Nutzen Sie die Informationen aus den Dokumentenauszügen
-2. Zitieren Sie die relevanten Stellen mit Quellenangabe und Seitenzahl
-3. Formulieren Sie die Antwort klar und verständlich
-4. Falls die Information tatsächlich nicht in den Auszügen zu finden ist, erklären Sie, welche verwandten Informationen verfügbar sind"""
+2. Formulieren Sie die Antwort klar und verständlich ohne Quellenangaben im Text
+3. Falls die Information tatsächlich nicht in den Auszügen zu finden ist, erklären Sie, welche verwandten Informationen verfügbar sind"""
                 }
             ]
 
