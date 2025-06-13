@@ -68,8 +68,33 @@ export default function AynzamInterface() {
 
   // Enhanced markdown-like formatting for German text
   const formatMessageContent = (content: string) => {
-    // Split by double line breaks for paragraphs
-    const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim());
+    // Clean and normalize the content
+    let normalizedContent = content.trim();
+    
+    // Add spaces after periods if missing (common issue with AI responses)
+    normalizedContent = normalizedContent.replace(/\.([A-ZÄÖÜ])/g, '. $1');
+    
+    // Add spaces around colons if missing
+    normalizedContent = normalizedContent.replace(/:([A-ZÄÖÜ])/g, ': $1');
+    
+    // Handle bullet point patterns and convert them to proper formatting
+    normalizedContent = normalizedContent.replace(/- ([^-]+)/g, '\n• $1');
+    
+    // Split by double line breaks for paragraphs, or create paragraphs at sentence boundaries
+    let paragraphs = normalizedContent.split(/\n\s*\n/).filter(p => p.trim());
+    
+    // If no double line breaks found, try to create logical paragraphs
+    if (paragraphs.length === 1) {
+      // Split long content into sentences and group them
+      const sentences = normalizedContent.split(/(?<=[.!?])\s+(?=[A-ZÄÖÜ])/);
+      if (sentences.length > 3) {
+        // Group sentences into paragraphs (every 2-3 sentences)
+        paragraphs = [];
+        for (let i = 0; i < sentences.length; i += 2) {
+          paragraphs.push(sentences.slice(i, i + 2).join(' '));
+        }
+      }
+    }
 
     return paragraphs.map((paragraph, index) => {
       const trimmedParagraph = paragraph.trim();
