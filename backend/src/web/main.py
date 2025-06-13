@@ -1,4 +1,7 @@
-
+"""
+FastAPI web layer for Aynzam - connects existing backend to Next.js frontend.
+Uses existing RAG components and database models.
+"""
 
 from typing import Any
 
@@ -119,22 +122,34 @@ async def chat_stream(request: ChatRequest):
         generator = Generator(api_key=settings.openai_key)
 
         def generate_stream():
-            stream = generator.generate_streaming_answer(
-                query=request.message,
-                k=3,
-                temperature=request.temperature
-            )
+            try:
+                stream = generator.generate_streaming_answer(
+                    query=request.message,
+                    k=3,
+                    temperature=request.temperature
+                )
 
-            for chunk in stream:
-                if hasattr(chunk, 'choices') and chunk.choices[0].delta.content:
-                    yield f"data: {chunk.choices[0].delta.content}\n\n"
+                for chunk in stream:
+                    if hasattr(chunk, 'choices') and len(chunk.choices) > 0:
+                        delta = chunk.choices[0].delta
+                        if hasattr(delta, 'content') and delta.content:
+                            yield f"data: {delta.content}\n\n"
 
-            yield "data: [DONE]\n\n"
+                yield "data: [DONE]\n\n"
+
+            except Exception as e:
+                yield f"data: Error: {e!s}\n\n"
+                yield "data: [DONE]\n\n"
 
         return StreamingResponse(
             generate_stream(),
             media_type="text/plain",
-            headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            }
         )
 
     except Exception as e:
