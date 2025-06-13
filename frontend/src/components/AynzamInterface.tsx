@@ -637,10 +637,6 @@ export default function AynzamInterface() {
                             <div className="prose prose-sm dark:prose-invert max-w-none">
                               <div className="text-gray-800 dark:text-gray-200">
                                 {formatMessageContent(msg.content)}
-                                {/* Show cursor for the last assistant message if streaming */}
-                                {i === messages.length - 1 && isStreaming && (
-                                  <span className="inline-block w-0.5 h-4 bg-blue-500 ml-1 animate-pulse"></span>
-                                )}
                               </div>
                               <div className="text-xs mt-4 text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-3">
                                 {formatTimestamp(msg.timestamp)}
