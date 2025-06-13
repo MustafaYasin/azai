@@ -180,16 +180,17 @@ export default function AynzamInterface() {
     return noInfoIndicators.some(indicator => lowerContent.includes(indicator));
   };
 
-  const sendMessage = async (useOpenAI = false) => {
-    if (!message.trim() || isLoading || isStreaming) return;
+  const sendMessage = async (useOpenAI = false, contentOverride?: string) => {
+    const messageToSend = contentOverride || message;
+    if (!messageToSend.trim() || isLoading || isStreaming) return;
 
     const userMessage: ChatMessage = {
       role: 'user',
-      content: message,
+      content: messageToSend,
       timestamp: new Date()
     };
 
-    const currentMessage = message;
+    const currentMessage = messageToSend;
     setMessage('');
     setIsLoading(true);
     setIsStreaming(false);
@@ -353,6 +354,13 @@ export default function AynzamInterface() {
     setMessages([]);
     setError(null);
     setShowOpenAIFallback(false);
+  };
+
+  const handleOpenAISearch = () => {
+    const lastUserMessage = [...messages].reverse().find(m => m.role === 'user');
+    if (lastUserMessage) {
+      sendMessage(true, lastUserMessage.content);
+    }
   };
 
   const formatTimestamp = (timestamp: Date) => {
@@ -686,7 +694,7 @@ export default function AynzamInterface() {
                                   Möchten Sie stattdessen eine Internetsuche mit OpenAI durchführen?
                                 </div>
                                 <button
-                                  onClick={() => sendMessage(true)}
+                                  onClick={handleOpenAISearch}
                                   className="inline-flex items-center px-4 py-2 bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600 text-white text-sm rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                                   disabled={isLoading || isStreaming}
                                 >
