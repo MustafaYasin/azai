@@ -192,7 +192,7 @@ async def chat_openai_direct(request: ChatRequest):
         client = OpenAI(api_key=settings.openai_key)
 
         messages = [
-            {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen ausführlich, strukturiert und gut formatiert auf Deutsch. Verwenden Sie Absätze, Aufzählungen und klare Strukturen um die Information verständlich zu präsentieren. Geben Sie detaillierte und umfassende Antworten."}
+            {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen ausführlich, strukturiert und gut formatiert auf Deutsch. Verwenden Sie Absätze, Aufzählungen und klare Strukturen um die Information verständlich zu präsentieren. Geben Sie detaillierte und umfassende Antworten. Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten."}
         ]
 
         # Add conversation history
@@ -231,7 +231,7 @@ async def chat_openai_direct_stream(request: ChatRequest):
         def generate_stream():
             try:
                 messages = [
-                    {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen ausführlich, strukturiert und gut formatiert auf Deutsch. Verwenden Sie Absätze, Aufzählungen und klare Strukturen um die Information verständlich zu präsentieren. Geben Sie detaillierte und umfassende Antworten."}
+                    {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen ausführlich, strukturiert und gut formatiert auf Deutsch. Verwenden Sie Absätze, Aufzählungen und klare Strukturen um die Information verständlich zu präsentieren. Geben Sie detaillierte und umfassende Antworten. Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten."}
                 ]
 
                 # Add conversation history

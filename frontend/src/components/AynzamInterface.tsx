@@ -191,20 +191,26 @@ export default function AynzamInterface() {
   // Enhanced detection for "no information" messages in German
   const isNoInfoMessage = (content: string) => {
     const noInfoIndicators = [
-      'leider enthalten die bereitgestellten dokumentenauszüge keine',
-      'es wurden keine relevanten informationen',
-      'keine spezifischen informationen',
-      'die bereitgestellten dokumentenauszüge enthalten keine',
-      'in den bereitgestellten dokumenten',
-      'keine informationen zu',
-      'nicht in den dokumenten',
-      'keine passenden dokumente',
-      'enthalten keine spezifischen informationen',
-      'sind jedoch nicht ausreichend'
+      'es wurden keine relevanten informationen in den dokumenten gefunden',
+      'leider enthalten die bereitgestellten dokumentenauszüge keine informationen',
+      'die bereitgestellten dokumentenauszüge enthalten keine spezifischen informationen',
+      'keine passenden dokumente gefunden',
+      'keine relevanten dokumentenauszüge verfügbar'
     ];
 
-    const lowerContent = content.toLowerCase();
-    return noInfoIndicators.some(indicator => lowerContent.includes(indicator));
+    const lowerContent = content.toLowerCase().trim();
+    
+    // Only trigger if the content is short and matches exactly
+    if (lowerContent.length < 100) {
+      return noInfoIndicators.some(indicator => lowerContent.includes(indicator));
+    }
+    
+    // For longer content, be more specific
+    return noInfoIndicators.some(indicator => 
+      lowerContent.startsWith(indicator) || 
+      lowerContent.includes(indicator + '.') ||
+      lowerContent.includes(indicator + ' zu')
+    );
   };
 
   const sendMessage = async (useOpenAI = false, contentOverride?: string) => {

@@ -1,4 +1,3 @@
-
 from openai import OpenAI
 
 from rag.retrieval import Retriever
@@ -37,6 +36,7 @@ Ihre Aufgaben:
 - Strukturieren Sie Ihre Antwort mit Absätzen, Aufzählungen und klarer Formatierung
 - Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
 - Nutzen Sie Aufzählungszeichen (-) für Listen
+- Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten
 
 Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
@@ -102,6 +102,7 @@ Ihre Aufgaben:
 - Strukturieren Sie Ihre Antwort mit Absätzen, Aufzählungen und klarer Formatierung
 - Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
 - Nutzen Sie Aufzählungszeichen (-) für Listen
+- Verwenden Sie passende Emojis 📋 💡 ⚡ 📊 ✅ ❗ 🔍 📝 um die Antwort ansprechender zu gestalten
 
 Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
