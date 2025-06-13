@@ -1,7 +1,4 @@
-"""
-FastAPI web layer for Aynzam - connects existing backend to Next.js frontend.
-Uses existing RAG components and database models.
-"""
+
 
 from typing import Any
 
@@ -10,8 +7,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
-
-# Import existing components (no changes to these)
 from rag.generation import Generator
 from rag.retrieval import Retriever
 
@@ -19,37 +14,27 @@ from frontend.settings import settings
 
 
 class ChatMessage(BaseModel):
-    """Chat message model."""
-
     role: str = Field(..., description="Role of the message sender")
     content: str = Field(..., description="Content of the message")
 
 
 class ChatRequest(BaseModel):
-    """Chat request model."""
-
     message: str = Field(..., description="User message")
     conversation_history: list[ChatMessage] = Field(default_factory=list)
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
 
 
 class ChatResponse(BaseModel):
-    """Chat response model."""
-
     message: str = Field(..., description="Generated response")
     sources: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class SearchRequest(BaseModel):
-    """Search request model."""
-
     query: str = Field(..., description="Search query")
     limit: int = Field(default=5, ge=1, le=20)
 
 
 class SearchResponse(BaseModel):
-    """Search response model."""
-
     results: list[dict[str, Any]] = Field(..., description="Search results")
     total_found: int = Field(..., description="Total number of results found")
 
@@ -79,9 +64,6 @@ async def health_check():
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    """
-    Generate chat response using existing RAG system.
-    """
     try:
         # Use existing Generator class
         generator = Generator(api_key=settings.openai_key)
@@ -196,6 +178,100 @@ async def list_sources():
             {"name": "Presentations", "type": "documents", "status": "connected"}
         ]
     }
+
+
+@app.post("/api/chat/openai", response_model=ChatResponse)
+async def chat_openai_direct(request: ChatRequest):
+    """
+    Generate chat response using OpenAI directly (no RAG).
+    Used as fallback when documents don't contain the answer.
+    """
+    try:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=settings.openai_key)
+
+        messages = [
+            {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen präzise und strukturiert auf Deutsch."}
+        ]
+
+        # Add conversation history
+        for msg in request.conversation_history:
+            messages.append({"role": msg.role, "content": msg.content})
+
+        # Add current message
+        messages.append({"role": "user", "content": request.message})
+
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=messages,
+            temperature=request.temperature,
+            max_tokens=1000
+        )
+
+        return ChatResponse(
+            message=response.choices[0].message.content,
+            sources=[]  # No sources for direct OpenAI responses
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error with OpenAI direct response: {e!s}")
+
+
+@app.post("/api/chat/openai/stream")
+async def chat_openai_direct_stream(request: ChatRequest):
+    """
+    Stream chat response using OpenAI directly (no RAG).
+    """
+    try:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=settings.openai_key)
+
+        def generate_stream():
+            try:
+                messages = [
+                    {"role": "system", "content": "Sie sind ein hilfsreicher KI-Assistent. Beantworten Sie Fragen präzise und strukturiert auf Deutsch."}
+                ]
+
+                # Add conversation history
+                for msg in request.conversation_history:
+                    messages.append({"role": msg.role, "content": msg.content})
+
+                # Add current message
+                messages.append({"role": "user", "content": request.message})
+
+                stream = client.chat.completions.create(
+                    model="gpt-4",
+                    messages=messages,
+                    temperature=request.temperature,
+                    max_tokens=1000,
+                    stream=True
+                )
+
+                for chunk in stream:
+                    if chunk.choices[0].delta.content:
+                        yield f"data: {chunk.choices[0].delta.content}\n\n"
+
+                yield "data: [DONE]\n\n"
+
+            except Exception as e:
+                yield f"data: Error: {e!s}\n\n"
+                yield "data: [DONE]\n\n"
+
+        return StreamingResponse(
+            generate_stream(),
+            media_type="text/plain",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            }
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error streaming OpenAI direct response: {e!s}")
 
 
 @app.get("/api/projects")
