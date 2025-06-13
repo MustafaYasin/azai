@@ -149,12 +149,14 @@ export default function AynzamInterface() {
 
   // Format inline text (bold, italic, code, etc.)
   const formatInlineText = (text: string) => {
-    // Split text by formatting patterns
-    const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`|_.*?_)/g);
+    // More robust regex that handles word boundaries and content better
+    const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|_[^_]+_)/g);
 
     return parts.map((part, index) => {
+      if (!part) return '';
+
       // Bold text (**text**)
-      if (part.startsWith('**') && part.endsWith('**')) {
+      if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
         return (
           <strong key={index} className="font-semibold text-gray-900 dark:text-gray-100">
             {part.slice(2, -2)}
@@ -163,8 +165,8 @@ export default function AynzamInterface() {
       }
 
       // Italic text (*text* or _text_)
-      if ((part.startsWith('*') && part.endsWith('*') && !part.startsWith('**')) ||
-          (part.startsWith('_') && part.endsWith('_'))) {
+      if (((part.startsWith('*') && part.endsWith('*') && !part.startsWith('**')) ||
+           (part.startsWith('_') && part.endsWith('_'))) && part.length > 2) {
         return (
           <em key={index} className="italic text-gray-800 dark:text-gray-200">
             {part.slice(1, -1)}
@@ -173,7 +175,7 @@ export default function AynzamInterface() {
       }
 
       // Code text (`text`)
-      if (part.startsWith('`') && part.endsWith('`')) {
+      if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
         return (
           <code key={index} className="bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs font-mono text-gray-800 dark:text-gray-200">
             {part.slice(1, -1)}

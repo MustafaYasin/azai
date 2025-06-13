@@ -34,8 +34,11 @@ Ihre Aufgaben:
 - Fassen Sie komplexe technische Informationen klar und verständlich zusammen
 - Wenn die Auszüge die relevanten Informationen enthalten, geben Sie diese ausführlich wieder
 - Antworten Sie immer auf Deutsch und im Kontext technischer Dokumentation
+- Strukturieren Sie Ihre Antwort mit Absätzen, Aufzählungen und klarer Formatierung
+- Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
+- Nutzen Sie Aufzählungszeichen (-) für Listen
 
-Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen."""
+Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
             messages = [
                 {
@@ -62,7 +65,8 @@ Anforderungen an die Antwort:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,
-                temperature=temperature
+                temperature=temperature,
+                max_tokens=2000
             )
 
             return response.choices[0].message.content
@@ -95,8 +99,11 @@ Ihre Aufgaben:
 - Fassen Sie komplexe technische Informationen klar und verständlich zusammen
 - Wenn die Auszüge die relevanten Informationen enthalten, geben Sie diese ausführlich wieder
 - Antworten Sie immer auf Deutsch und im Kontext technischer Dokumentation
+- Strukturieren Sie Ihre Antwort mit Absätzen, Aufzählungen und klarer Formatierung
+- Verwenden Sie **fett** für wichtige Begriffe und *kursiv* für Betonungen
+- Nutzen Sie Aufzählungszeichen (-) für Listen
 
-Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen."""
+Wichtig: Basieren Sie Ihre Antwort ausschließlich auf den bereitgestellten Dokumentenauszügen und formatieren Sie sie gut lesbar."""
 
             messages = [
                 {
@@ -124,6 +131,7 @@ Anforderungen an die Antwort:
                 model=self.model,
                 messages=messages,
                 temperature=temperature,
+                max_tokens=2000,
                 stream=True
             )
 
