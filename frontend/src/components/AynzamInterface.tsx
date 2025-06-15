@@ -336,7 +336,12 @@ export default function AynzamInterface() {
             // 2. Sources found but response indicates no relevant info
             const responseIndicatesNoInfo = accumulatedContent.toLowerCase().includes('keine spezifischen informationen') ||
                                           accumulatedContent.toLowerCase().includes('keine relevanten informationen') ||
-                                          accumulatedContent.toLowerCase().includes('enthalten die bereitgestellten dokumentenauszüge keine');
+                                          accumulatedContent.toLowerCase().includes('enthalten die bereitgestellten dokumentenauszüge keine') ||
+                                          accumulatedContent.toLowerCase().includes('ich kann diese frage nicht') ||
+                                          accumulatedContent.toLowerCase().includes('keine informationen über') ||
+                                          accumulatedContent.toLowerCase().includes('nicht in den bereitgestellten dokumenten') ||
+                                          accumulatedContent.toLowerCase().includes('in den verfügbaren dokumenten') ||
+                                          (accumulatedContent.toLowerCase().includes('deutschland') && accumulatedContent.length < 200);
             
             console.log('Debug fallback:', { 
               sourcesLength: sources.length, 
@@ -348,9 +353,20 @@ export default function AynzamInterface() {
               console.log('Setting showOpenAIFallback to true');
               setShowOpenAIFallback(true);
             }
+          } else {
+            // Handle non-200 responses from search API
+            console.warn('Sources API returned error:', sourcesResponse.status, sourcesResponse.statusText);
+            
+            // If search fails, assume no sources and show OpenAI fallback
+            console.log('Search API failed, setting showOpenAIFallback to true');
+            setShowOpenAIFallback(true);
           }
         } catch (sourcesErr) {
           console.error('Fehler beim Laden der Quellen:', sourcesErr);
+          
+          // If there's an error fetching sources, show OpenAI fallback
+          console.log('Sources request failed, setting showOpenAIFallback to true');
+          setShowOpenAIFallback(true);
         }
       }
 
